@@ -1,7 +1,7 @@
-export default function ManageReservation () {
-    return(
-        <main>
-            <div>Manage New Booking</div>
+export default function ManageReservations () {
+    return (
+        <main className="text-center text-lg">
+            <div>Manage Your Reservation</div>
         </main>
     );
 }

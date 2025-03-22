@@ -9,9 +9,7 @@
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
     display: flex;
-    align-items: center; 
-    justify-content: flex-end; 
-    padding: 0 20px; 
+    flex-direction: row;
 }
 
 .logoimg {
@@ -24,8 +22,7 @@
     text-align: center;
     margin-top: auto;
     margin-bottom: auto;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 10pt;
     color: grey;
 }
-

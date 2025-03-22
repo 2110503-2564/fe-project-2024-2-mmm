@@ -5,7 +5,9 @@ import TopMenuItem from './TopMenuItem';
 export default function TopMenu() {
     return (
         <div className={styles.menucontainer}>
-            <TopMenuItem title='Booking' pageRef='/booking' className={styles.booking}/>    
-        </div>
+        <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
+        width={0} height={0} sizes='100vh' />
+        <TopMenuItem title='Booking' pageRef='/booking' className={styles.booking}/>
+    </div>
     );
 }
