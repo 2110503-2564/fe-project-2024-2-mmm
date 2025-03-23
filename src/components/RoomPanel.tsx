@@ -1,52 +1,48 @@
-'use client'
-import { useReducer } from "react";
-import ProductCard from "./ProductCard";
+"use client"
+import Card from "@/components/Card";
 import Link from "next/link";
-export default function RoomPanel() {
+import { useReducer } from "react";
 
-    const compareReducer = ( compareList:Set<string>, action:{type:string, roomName:string} )=>{
-        switch(action.type) {
-            case 'add': {
-                return new Set( compareList.add(action.roomName) )
-            }
-            case 'remove': {
-                compareList.delete(action.roomName)
-                return new Set( compareList )
-            }
-            default: return compareList
-        }
+export default function RoomPanel () {
+    const i = (map : Map<string, number>) => {
+        map.set('Room 1', 0)
+        map.set('Room 2', 0)
+        map.set('Room 3', 0)
+        return map
     }
 
-    const [ compareList, dispatchCompare ] = useReducer(compareReducer, new Set<string>() )
+    const ratingReducer = (map : Map<string, number>, action : {type:string, name:string, rating:number}) => {   
+        switch (action.type) {
+            case 'add' :
+                if (action.rating == null) {
+                    action.rating = 0
+                }
+                return new Map(map.set(action.name, action.rating))
+            case 'remove' :
+                map.delete(action.name)
+                return new Map(map)
+            default : return map
+            }   
+        }
 
-    /**
-     * Mock Data for Demontration Only
-     */
-    const mockRoomRepo = [
-        {rid: "001", name: "Room 1", image: "/img/room1.jpg" },
-        {rid: "002", name: "Room 2", image: "/img/room2.jpg" },
-        {rid: "003", name: "Room 3", image: "/img/room3.jpg" },
-    ]
+    const [map, dispatchRating] = useReducer(ratingReducer, new Map<string,number>, i);
 
+    const mockCoworkingspaceRepo = [{rid:"001", name:"Room 1", image:"/img/room1.jpg"},
+        {rid:"002", name:"Room 2", image:"/img/room2.jpg"},
+        {rid:"003", name:"Room 3", image:"/img/room3.jpg"}]
+     
     return (
     <div>
-        <div style={{margin:"20px", display:"flex", 
-        flexDirection:"row", alignContent:"space-around",
-        justifyContent:"space-around", flexWrap:"wrap", padding:"10px"}}>
+        <div className="m-5 flex flex-row content-around justify-around flex-wrap">
             {
-                mockRoomRepo.map((roomItem)=>(
-                    <Link href={`/coworkingspace/${roomItem.rid}`} className="w-1/5">
-                    <ProductCard roomName={roomItem.name} imgSrc={roomItem.image}
-                        onCompare={ (room:string)=>dispatchCompare({type:'add', roomName:room}) }
-                    />
+                mockCoworkingspaceRepo.map((Item) => (
+                    <Link href={`/coworkingspace/${Item.rid}`} className="w-1/5">
+                        <Card coworkingspaceName={Item.name} imgSrc={Item.image}
+                        onRating={(coworkingspacename:string, rating:number) => dispatchRating({type:'add', name:coworkingspacename, rating:rating})}/>
                     </Link>
                 ))
             }
         </div>
-        <div className="w-full text-xl font-medium">Compare List: { compareList.size } </div>
-        { Array.from(compareList).map( (room)=><div key={room} 
-        onClick={()=>dispatchCompare({type:'remove', roomName:room})}>
-            {room}</div> ) }
     </div>
-    );
+  );
 }

@@ -1,17 +1,28 @@
+'use client'
 import InteractiveCard from './InteractiveCard';
-import Image from 'next/image';
+import Image from 'next/image'
+import { useState } from 'react';
+import { Rating } from '@mui/material';
 
-export default function Card({ venueName, imgSrc} : { venueName:string, imgSrc:string}) {
+export default function Card ({coworkingspaceName, imgSrc, onRating}:{coworkingspaceName:string, imgSrc:string, onRating?:Function}) {
+    const [value, setValue] = useState<number|null> (0) ;
+
     return (
-        <InteractiveCard contentName={ venueName }>
-            <div className="w-full h-[70%] relative rounded-t-lg">
+        <InteractiveCard contentName={coworkingspaceName}>
+            <div className='w-full h-[70%] relative rounded-t-lg'>
                 <Image src={imgSrc}
-                    alt='Product Picture'
-                    fill={true}
-                    className='object-cover rounded-t-lg'
-                />
+                alt='Co-Working Space Picture'
+                fill={true}
+                className='object-cover rounded-t-lg'/>
             </div>
-            <div className="w-full h-[30%] p-[10px]">{venueName}</div>
+            <div className='w-full h-[30%] p-[10px] content-center text-left font-sans text-xl'>
+                <h4>{coworkingspaceName}</h4>
+                {
+                    onRating? <Rating name={coworkingspaceName + " Rating"} id={coworkingspaceName + " Rating"} data-testid={coworkingspaceName + " Rating"}
+                    value={value} onChange={(e, newVal) => {e.stopPropagation; setValue(newVal); onRating(coworkingspaceName, newVal);}}
+                    onClick={(e) => {e.stopPropagation()}}/>:''
+                }
+            </div>
         </InteractiveCard>
     );
 }
