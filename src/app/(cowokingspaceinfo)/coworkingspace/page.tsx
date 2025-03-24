@@ -1,15 +1,20 @@
-import getCoworkingspaces from "@/libs/getCoworkingspaces"
-import CWSCatalog from "@/components/CWSCatalog"
+import CwsCatalog from "@/components/CWSCatalog"
+import getCwSpaces from "@/libs/getCoworkingspaces"
 import { Suspense } from "react"
-import { LinearProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 
-export default function Coworkingspace() {
-    const cws = getCoworkingspaces()
+export default async function CoworkingSpaces() {
+    const cwSpaces = await getCwSpaces()
+
     return (
         <main className="text-center p-5">
-            <h1 className="text-xl font-medium" >View Our Rooms</h1>
-            <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
-            <CWSCatalog CWSJson={cws}/>
+            <div className="text-3xl font-bold mt-5">Explore Our Co-working Spaces</div>
+            <Suspense fallback={
+                <div className="flex flex-col items-center justify-center mt-[15%]">
+                    <CircularProgress className="mb-2" />
+                    <p>Loading...</p>
+                </div>}>
+                <CwsCatalog cwsJson={cwSpaces} />
             </Suspense>
         </main>
     )
