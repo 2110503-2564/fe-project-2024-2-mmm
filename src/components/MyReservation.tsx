@@ -23,7 +23,7 @@ export default function MyReservation({ reservations, user }: { reservations: Re
 
             {/* เวลาการจอง */}
             <div className="text-sm text-gray-700 mb-4">
-              Start time: {dayjs(item.rsvtDate).subtract(7, "hour").format("DD/MM/YYYY HH:mm")}
+              Reservation Date: {dayjs(item.rsvtDate).subtract(7, "hour").format("DD/MM/YYYY HH:mm")}
             </div>
 
             {/* ปุ่ม Update & Delete */}
